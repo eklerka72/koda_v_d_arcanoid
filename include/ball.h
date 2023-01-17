@@ -41,7 +41,7 @@ public:
 		}
 		else
 		{
-			double ex = rand() % 4 + 1;
+			double ex = rand() % 3 + 1;
 			if (this->angle >= 0)
 				this->angle = ex;
 			else if (this->angle <= 0)

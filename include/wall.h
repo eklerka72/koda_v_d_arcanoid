@@ -45,13 +45,18 @@ public:
 	}
 	void removeDestroyed(unsigned int& player_score)
 	{
-		for (auto Brick = this->bricks.begin(); Brick != bricks.end(); ++Brick)
+		auto Brick = this->bricks.begin();
+
+		while(Brick != this->bricks.end())
 		{
 			if ((*Brick).isDestroy())
 			{
 				player_score += (*Brick).getPoints();
-				this->bricks.erase(Brick--);//?
+				Brick = this->bricks.erase(Brick);//?
 				this->tot_bricks--;
+			}
+			else {
+				Brick++;
 			}
 		}
 	}

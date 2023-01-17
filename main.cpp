@@ -1,12 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <SFML/Graphics.hpp>
-#include<fstream>
-#include<math.h>
-#include<ctime>
-#include<string.h>
+#include <fstream>
+#include <math.h>
+#include <ctime>
+#include <string.h>
 #include <sstream>
-#include<stdio.h>
+#include <stdio.h>
 #include "player.h" 
 #include "ball.h" 
 #include "brick.h" 
@@ -40,7 +40,7 @@ int highScoreIO(std::string hscore, unsigned int score = 0, bool mode = 0)
 {
 	std::string Hscore;
 	std::fstream fhandler;
-	fhandler.open("HSCORE.txt", std::ios::out | std::ios::in);
+	fhandler.open("../HSCORE.txt", std::ios::out | std::ios::in);
 
 	if (!mode && fhandler)
 	{
@@ -193,7 +193,7 @@ int main(int argc, char** argv)
 	srand(time(nullptr));
 
 	sf::Font atari;
-	atari.loadFromFile("font/AtariST8x16SystemFont.ttf");
+	atari.loadFromFile("..\\font\\AtariST8x16SystemFont.ttf");
 
 	sf::Text hscore_ui;
 	hscore_ui.setFont(atari);
@@ -226,34 +226,34 @@ int main(int argc, char** argv)
 	pause.setFillColor(sf::Color::White);
 
 	sf::Texture pow1_texture;
-	pow1_texture.loadFromFile("powers/power1.png");
+	pow1_texture.loadFromFile("..\\powers\\power1.png");
 
 	sf::Texture pow2_texture;
-	pow2_texture.loadFromFile("powers/power2.png");
+	pow2_texture.loadFromFile("..\\powers\\power2.png");
 
 	sf::Texture pow3_texture;
-	pow3_texture.loadFromFile("powers/power3.png");
+	pow3_texture.loadFromFile("..\\powers\\power3.png");
 
 	sf::Texture pow4_texture;
-	pow4_texture.loadFromFile("powers/power4.png");
+	pow4_texture.loadFromFile("..\\powers\\power4.png");
 
 	sf::Texture pow5_texture;
-	pow5_texture.loadFromFile("powers/power5.png");
+	pow5_texture.loadFromFile("..\\powers\\power5.png");
 
 	sf::Texture pow6_texture;
-	pow6_texture.loadFromFile("powers/power6.png");
+	pow6_texture.loadFromFile("..\\powers\\power6.png");
 
 	sf::Texture pow7_texture;
-	pow7_texture.loadFromFile("powers/power7.png");
+	pow7_texture.loadFromFile("..\\powers\\power7.png");
 
 	sf::Texture pow8_texture;
-	pow8_texture.loadFromFile("powers/power8.png");
+	pow8_texture.loadFromFile("..\\powers\\power8.png");
 
 	sf::Texture pow9_texture;
-	pow9_texture.loadFromFile("powers/power9.png");
+	pow9_texture.loadFromFile("..\\powers\\power9.png");
 
 	sf::Texture pow10_texture;
-	pow10_texture.loadFromFile("powers/power10.png");
+	pow10_texture.loadFromFile("..\\powers\\power10.png");
 
 	hscore_txt.setString("H-SCORE");
 	hscore_txt.setPosition(10, 5);
@@ -295,7 +295,7 @@ int main(int argc, char** argv)
 	std::vector<Powerup> powers;
 
 	Player p1(70, 10, WIDTH / 2, HEIGHT - 20);
-	Ball palla(5, WIDTH / 2, (HEIGHT / 2) + 50, 4);
+	Ball palla(5, WIDTH / 2, (HEIGHT / 2) + 50, 3);
 	Wall theWall;
 
 
@@ -434,11 +434,16 @@ int main(int argc, char** argv)
 			theWall.checkCollisions(palla, power_type);
 			theWall.removeDestroyed(player_score);
 
-			for (auto power = powers.begin(); power != powers.end(); ++power)
+			auto power = powers.begin();
+
+			while (power != powers.end())
 			{
 				if ((*power).isTake())
 				{
-					powers.erase(power--);
+					power = powers.erase(power);
+				}
+				else {
+					power++;
 				}
 			}
 
